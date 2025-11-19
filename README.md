@@ -76,4 +76,4 @@ Cada servicio usa su propio archivo:
 
 ## 👨‍💻 Autor
 
-**Carlos Vanegas – Vanqode Solutions**
+**Carlos Vanegas – Postulante**
