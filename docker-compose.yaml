@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend
+    container_name: dicri-backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env.docker
+    depends_on:
+      - sqlserver
+
+  frontend:
+    build: ./frontend
+    container_name: dicri-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env.docker
+    depends_on:
+      - backend
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: dicri-sql
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=TuPassword123!
