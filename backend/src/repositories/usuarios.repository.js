@@ -6,20 +6,8 @@ async function buscarUsuarioPorNombreUsuario(usuario) {
 
     const result = await pool.request()
         .input('usuario', usuario)
-        .query(`
-              SELECT 
-                id_usuario,
-                nombre_completo,
-                usuario,
-                email,
-                password_hash,
-                id_rol,
-                activo
-              FROM usuarios
-              WHERE usuario = @usuario
-            `);
+        .execute('sp_usuarios_login');
 
-    // Si no hay registros, devolvemos null
     if (result.recordset.length === 0) {
         return null;
     }
