@@ -45,3 +45,8 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=@dmin$1234
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:

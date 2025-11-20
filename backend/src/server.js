@@ -6,6 +6,10 @@ const errorMiddleware = require('./middlewares/error.middleware');
 const estadosRoutes = require('./routes/estados.routes');
 const rolesRoutes = require('./routes/roles.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+
 const { getPool } = require('./config/db');
 
 // cargar .env
@@ -34,7 +38,12 @@ app.get('/api/db-test', async (req, res, next) => {
     }
 });
 
-// Rutas (auth será la primera)
+
+//Documentación Swagger
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+// Rutasss
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 app.use('/api/estados', estadosRoutes);
@@ -43,6 +52,9 @@ app.use('/api/usuarios', usuariosRoutes);
 // Middleware de errores al final
 app.use(errorMiddleware);
 
+
 app.listen(PORT, () => {
+    console.log(`Servidor escuchando en puerto ${PORT}`);
+    console.log(`Swagger docs en http://localhost:${PORT}/api/docs*`);
     console.log(`Servidor escuchando en puerto ${PORT}`);
 });

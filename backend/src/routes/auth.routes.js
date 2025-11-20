@@ -7,6 +7,43 @@ router.get('/', (req, res) => {
     res.json({ ok: true, message: 'Auth API funcionando' });
 });
 
+//Documentacion
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Autenticación de usuarios
+ */
+
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Iniciar sesión
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - usuario
+ *               - password
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login exitoso
+ *       401:
+ *         description: Credenciales incorrectas
+ */
+
+
 // Login
 router.post('/login', authController.login);
 
