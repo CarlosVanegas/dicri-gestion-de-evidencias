@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const errorMiddleware = require('./middlewares/error.middleware');
 const estadosRoutes = require('./routes/estados.routes');
 const rolesRoutes = require('./routes/roles.routes');
+const usuariosRoutes = require('./routes/usuarios.routes');
 const { getPool } = require('./config/db');
 
 // cargar .env
@@ -38,6 +39,7 @@ const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 app.use('/api/estados', estadosRoutes);
 app.use('/api/roles', rolesRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 // Middleware de errores al final
 app.use(errorMiddleware);
 
