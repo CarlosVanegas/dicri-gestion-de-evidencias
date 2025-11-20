@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const errorMiddleware = require('./middlewares/error.middleware');
+const estadosRoutes = require('./routes/estados.routes');
 const { getPool } = require('./config/db');
 
 // cargar .env
@@ -34,6 +35,7 @@ app.get('/api/db-test', async (req, res, next) => {
 // Rutas (auth será la primera)
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
+app.use('/api/estados', estadosRoutes);
 
 // Middleware de errores al final
 app.use(errorMiddleware);
