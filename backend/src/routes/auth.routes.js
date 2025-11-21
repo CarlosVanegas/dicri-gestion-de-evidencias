@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth.controller');
+const { requireAuth } = require('../middlewares/auth');
 
 router.get('/', (req, res) => {
     res.json({ ok: true, message: 'Auth API funcionando' });
@@ -46,5 +47,7 @@ router.get('/', (req, res) => {
 
 // Login
 router.post('/login', authController.login);
+
+router.get('/profile', requireAuth, authController.profile);
 
 module.exports = router;

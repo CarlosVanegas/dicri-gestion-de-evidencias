@@ -100,6 +100,22 @@ async function desactivarUsuario(id_usuario) {
         .execute('sp_usuarios_desactivar');
 }
 
+async function obtenerUsuarioPorUsuario(usuario) {
+    const connection = await pool;
+    const request = connection.request();
+
+    request.input('usuario', sql.VarChar(100), usuario);
+
+    const result = await request.execute('sp_GetUsuarioByUsuario');
+
+    if (result.recordset.length === 0) {
+        return null;
+    }
+
+    return result.recordset[0];
+}
+
+
 module.exports = {
     buscarUsuarioPorNombreUsuario,
     listarUsuarios,
@@ -108,5 +124,6 @@ module.exports = {
     crearUsuario,
     actualizarUsuario,
     cambiarPassword,
-    desactivarUsuario
+    desactivarUsuario,
+    obtenerUsuarioPorUsuario
 };

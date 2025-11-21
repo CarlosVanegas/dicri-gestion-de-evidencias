@@ -2,24 +2,30 @@ const express = require('express');
 const router = express.Router();
 
 const indiciosCtrl = require('../controllers/indicios.controller');
-// const { requireAuth } = require('../middlewares/auth');
+const { requireAuth, requireRoles } = require('../middlewares/auth');
 
+// Ver detalle de indicio
 router.get(
     '/:id',
-    // requireAuth,
+    requireAuth,
     indiciosCtrl.obtenerIndicio,
 );
 
+// Actualizar indicio (TÉCNICO, COORDINADOR, ADMIN)
 router.put(
     '/:id',
-    // requireAuth,
+    requireAuth,
+    requireRoles(['TECNICO', 'COORDINADOR', 'ADMIN']),
     indiciosCtrl.actualizarIndicio,
 );
 
+// Eliminar indicio (ADMIN o COORDINADOR si quieres)
 router.delete(
     '/:id',
-    // requireAuth,
+    requireAuth,
+    requireRoles(['ADMIN', 'COORDINADOR']),
     indiciosCtrl.eliminarIndicio,
 );
+
 
 module.exports = router;

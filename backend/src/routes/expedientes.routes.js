@@ -2,6 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const expedientesController = require('../controllers/expedientes.controller');
+const expedientesCtrl = require('../controllers/expedientes.controller');
+const indiciosCtrl = require('../controllers/indicios.controller');
+const { requireAuth, requireRole, requireRoles } = require('../middlewares/auth');
 const { authMiddleware } = require('../middlewares/auth.middleware');
 
 // Todas las rutas de expedientes requieren autenticación
@@ -23,58 +26,54 @@ router.put('/:id', expedientesController.updateExpediente);
 // Lista expedientes (con filtros por query)
 router.get(
     '/',
-    // requireAuth,
+    requireAuth,
     expedientesCtrl.listarExpedientes,
-);
-
+)
 // Crear expediente
 router.post(
     '/',
-    // requireAuth,
+    requireAuth,
+    requireRoles(['TECNICO', 'COORDINADOR', 'ADMIN']),
     expedientesCtrl.crearExpediente,
 );
 
-// Obtener expediente + indicios
-router.get(
-    '/:id',
-    // requireAuth,
-    expedientesCtrl.obtenerExpediente,
-);
-
-// Eliminar expediente
 router.delete(
     '/:id',
-    // requireAuth,
+    requireAuth,
+    requireRole('ADMIN'),
     expedientesCtrl.eliminarExpediente,
 );
 
-// Aprobar expediente (solo coordinador)
+// Aprobar expediente (solo COORDINADOR)
 router.post(
     '/:id/aprobar',
-    // requireAuth,
-    // requireRole('COORDINADOR'),
+    requireAuth,
+    requireRole('COORDINADOR'),
     expedientesCtrl.aprobarExpediente,
 );
 
-// Rechazar expediente (solo coordinador)
+// Rechazar expediente (solo COORDINADOR)
 router.post(
     '/:id/rechazar',
-    // requireAuth,
-    // requireRole('COORDINADOR'),
+    requireAuth,
+    requireRole('COORDINADOR'),
     expedientesCtrl.rechazarExpediente,
 );
 
 // ----- Indicios anidados por expediente -----
 
+// Listar indicios de un expediente (autenticado)
 router.get(
     '/:idExpediente/indicios',
-    // requireAuth,
+    requireAuth,
     indiciosCtrl.obtenerIndiciosPorExpediente,
 );
 
+// Crear indicio (TÉCNICO, COORDINADOR, ADMIN)
 router.post(
     '/:idExpediente/indicios',
-    // requireAuth,
+    requireAuth,
+    requireRoles(['TECNICO', 'COORDINADOR', 'ADMIN']),
     indiciosCtrl.crearIndicio,
 );
 

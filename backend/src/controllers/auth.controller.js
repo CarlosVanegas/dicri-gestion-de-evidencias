@@ -2,26 +2,42 @@
 const AppError = require('../utils/appError');
 const authService = require('../services/auth.service');
 
-async function login(req, res, next) {
+async function login(req, res) {
     try {
         const { usuario, password } = req.body;
 
         if (!usuario || !password) {
-            throw new AppError('usuario y password son requeridos', 400);
+            return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
         }
 
-        const resultado = await authService.login(usuario, password);
+        const result = await authService.login(usuario, password);
 
-        res.json({
-            ok: true,
+        if (!result.ok) {
+            return res.status(401).json({ message: result.error });
+        }
+
+        return res.json({
             message: 'Login exitoso',
-            ...resultado
+            token: result.token,
+            user: result.user,
         });
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).json({ message: 'Error en el servidor', error: error.message });
+    }
+}
+
+async function profile(req, res) {
+    try {
+        res.json({
+            user: req.user,
+        });
+    } catch (error) {
+        console.error('Error en profile:', error);
+        res.status(500).json({ message: 'Error en el servidor', error: error.message });
     }
 }
 
 module.exports = {
-    login
+    login,profile
 };

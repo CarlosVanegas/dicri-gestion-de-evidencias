@@ -811,3 +811,28 @@ BEGIN
       AND fecha_revision BETWEEN @fecha_inicio AND @fecha_fin;
 END
 GO
+
+
+
+
+CREATE OR ALTER PROCEDURE dbo.sp_GetUsuarioByUsuario
+    @usuario VARCHAR(100)
+    AS
+BEGIN
+    SET NOCOUNT ON;
+
+SELECT
+    u.id_usuario,
+    u.nombre_completo,
+    u.usuario,
+    u.email,
+    u.password_hash,
+    u.id_rol,
+    u.activo,
+    r.nombre AS rol_nombre
+FROM dbo.usuarios u
+         INNER JOIN dbo.roles r
+                    ON u.id_rol = r.id_rol
+WHERE u.usuario = @usuario;
+END;
+GO
