@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const AppError = require('../utils/appError');
 const { generarToken } = require('../utils/jwt');
 const { buscarUsuarioPorNombreUsuario } = require('../repositories/usuarios.repository');
+const jwt = require('jsonwebtoken');
+const usuariosRepo = require('../repositories/usuarios.repository');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'a43e23499369712020e6624edb5057eada562d478cf80747177adfeae82d6ca4';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '2h';

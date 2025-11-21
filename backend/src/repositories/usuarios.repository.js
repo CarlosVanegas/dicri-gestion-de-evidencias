@@ -1,5 +1,5 @@
 // src/repositories/usuarios.repository.js
-const { getPool } = require('../config/db');
+const { getPool, sql } = require('../config/db');
 
 async function buscarUsuarioPorNombreUsuario(usuario) {
     const pool = await getPool();
@@ -88,7 +88,7 @@ async function cambiarPassword(id_usuario, password_hash) {
 
     if (result.recordset.length === 0) {
         return null;
-    }   
+    }
 
     return result.recordset[0];
 }
@@ -101,12 +101,10 @@ async function desactivarUsuario(id_usuario) {
 }
 
 async function obtenerUsuarioPorUsuario(usuario) {
-    const connection = await pool;
-    const request = connection.request();
-
-    request.input('usuario', sql.VarChar(100), usuario);
-
-    const result = await request.execute('sp_GetUsuarioByUsuario');
+    const pool = await getPool();
+    const result = await pool.request()
+        .input('usuario', sql.VarChar(100), usuario)
+        .execute('sp_GetUsuarioByUsuario');
 
     if (result.recordset.length === 0) {
         return null;
@@ -114,7 +112,6 @@ async function obtenerUsuarioPorUsuario(usuario) {
 
     return result.recordset[0];
 }
-
 
 module.exports = {
     buscarUsuarioPorNombreUsuario,
@@ -125,5 +122,5 @@ module.exports = {
     actualizarUsuario,
     cambiarPassword,
     desactivarUsuario,
-    obtenerUsuarioPorUsuario
+    obtenerUsuarioPorUsuario,
 };

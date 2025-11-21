@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const indiciosCtrl = require('../controllers/indicios.controller');
-const { requireAuth, requireRoles } = require('../middlewares/auth');
+const { requireAuth, requireRoles } = require('../middlewares/auth.middleware');
 
 // Ver detalle de indicio
 router.get(

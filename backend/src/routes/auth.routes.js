@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth.controller');
-const { requireAuth } = require('../middlewares/auth');
+const { requireAuth } = require('../middlewares/auth.middleware');
 
 router.get('/', (req, res) => {
     res.json({ ok: true, message: 'Auth API funcionando' });

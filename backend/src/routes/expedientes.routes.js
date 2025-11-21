@@ -4,7 +4,7 @@ const router = express.Router();
 const expedientesController = require('../controllers/expedientes.controller');
 const expedientesCtrl = require('../controllers/expedientes.controller');
 const indiciosCtrl = require('../controllers/indicios.controller');
-const { requireAuth, requireRole, requireRoles } = require('../middlewares/auth');
+const { requireAuth, requireRole, requireRoles } = require('../middlewares/auth.middleware');
 const { authMiddleware } = require('../middlewares/auth.middleware');
 
 // Todas las rutas de expedientes requieren autenticación
