@@ -3,6 +3,20 @@
 Este repositorio contiene el proyecto desarrollado para la **prueba técnica**, implementando un sistema de gestión de evidencias con backend, frontend y scripts SQL.  
 La solución está pensada para ejecutarse fácilmente mediante **Docker Compose**.
 
+
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
+![img_6.png](img_6.png)
 ---
 
 ## 📁 Estructura del proyecto
