@@ -237,3 +237,18 @@ BEGIN
     );
 END
 GO
+
+
+-- Tabla  para justificaciones de rechazo (si aún no existe)
+CREATE TABLE dbo.rechazos_expediente (
+                                         id_rechazo        INT IDENTITY PRIMARY KEY,
+                                         id_expediente     INT NOT NULL
+                                             CONSTRAINT FK_rechazos_expediente_expedientes
+                                                 REFERENCES dbo.expedientes,
+                                         id_usuario_coord  INT NOT NULL
+                                             CONSTRAINT FK_rechazos_expediente_usuarios
+                                                 REFERENCES dbo.usuarios,
+                                         justificacion     VARCHAR(1000) NOT NULL,
+                                         fecha_rechazo     DATETIME2(0) NOT NULL DEFAULT SYSDATETIME()
+);
+GO
