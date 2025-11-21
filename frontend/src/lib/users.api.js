@@ -1,15 +1,19 @@
 // src/lib/users.api.js
 import api from "./apiClient";
 
-// Normaliza la respuesta sin importar si el backend devuelve { usuarios } o un array directo
 const normalizeList = (data) => {
     if (Array.isArray(data)) return data;
+
+    if (Array.isArray(data?.data)) return data.data;
+
     if (Array.isArray(data?.usuarios)) return data.usuarios;
+
     return [];
 };
 
 const normalizeOne = (data) => {
     if (data?.usuario) return data.usuario;
+    if (data?.data) return data.data;
     return data;
 };
 
@@ -29,7 +33,6 @@ export async function updateUser(id_usuario, payload) {
 }
 
 export async function deactivateUser(id_usuario) {
-    // suponemos que el DELETE marca como inactivo
     const res = await api.delete(`/usuarios/${id_usuario}`);
     return res.data;
 }
