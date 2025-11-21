@@ -1,39 +1,86 @@
-# Proyecto Dicri - Gestión de Evidencias
+# Dicri – Sistema de Gestión de Evidencias
 
-Este proyecto es una aplicación **Full Stack** desarrollada con:
+Este repositorio contiene el proyecto desarrollado para la **prueba técnica**, implementando un sistema de gestión de evidencias con backend, frontend y scripts SQL.  
+La solución está pensada para ejecutarse fácilmente mediante **Docker Compose**.
 
-- **Backend:** Node.js + Express + SQL Server
-- **Frontend:** Next.js + React + Tailwind CSS
-- **Base de Datos:** SQL Server 2022 (Docker)
-- **Contenedores:** Docker + Docker Compose
+---
 
-## 📦 Estructura del Proyecto
+## 📁 Estructura del proyecto
 
 ```
-dicri-gestion-de-evidencias/
-│   docker-compose.yaml
-│   README.md
-│
-├── backend/
-│   ├── Dockerfile
-│   ├── .env.docker
-│   ├── package.json
-│   ├── src/
-│   └── README.md
-│
-└── frontend/
-    ├── Dockerfile
-    ├── .env.docker
-    ├── package.json
-    ├── src/
-    └── README.md
+.
+├── .idea/          # Configuraciones del IDE
+├── backend/        # API REST (Node.js, Express, MSSQL)
+├── frontend/       # Aplicación web (SPA)
+├── erp_diagram/    # Diagramas del sistema / DB
+└── sql/            # Scripts SQL (DB, tablas, datos, SPs)
 ```
 
 ---
 
-## 🚀 Levantar todo el proyecto
+## 🛠️ Tecnologías utilizadas
 
-Desde la **raíz del proyecto**:
+### Backend
+- Node.js
+- Express
+- MSSQL (driver `mssql`)
+- JWT para autenticación
+- Arquitectura organizada por capas (routes, controllers, services, repositories)
+
+### Frontend
+- SPA en JavaScript (estructura lista para consumir la API)
+
+### Base de Datos
+- SQL Server
+- Tablas: usuarios, roles, expedientes, estados, bitácora, etc.
+- Stored Procedures para manejo de expedientes.
+
+---
+
+## ⚙️ Variables de entorno del Backend (.env)
+
+Estas credenciales se deben colocar en el archivo:
+
+`backend/.env`
+
+```
+DB_SERVER=sqlserver
+DB_PORT=1433
+DB_USER=sa
+DB_PASSWORD=@dmin$1234
+DB_DATABASE=dicri_evidencias
+PORT=4000
+JWT_SECRET=a43e23499369712020e6624edb5057eada562d478cf80747177adfeae82d6ca4
+JWT_EXPIRES_IN=2h
+```
+
+> **Nota:** Estas credenciales están adaptadas para funcionar dentro del entorno Docker (la base de datos se expone como `sqlserver` entre contenedores).
+
+---
+
+## 🗄️ Scripts SQL
+
+En la carpeta `/sql` encontrarás los siguientes archivos:
+
+1. **01_create_database.sql**  
+   Crea la base de datos `dicri_evidencias`.
+
+2. **02_create_tables.sql**  
+   Incluye tablas de: usuarios, roles, expedientes, estados, etc.
+
+3. **03_seed_data.sql**  
+   Inserta datos iniciales (roles, usuario administrador, estados).
+
+4. **04_stored_procedures.sql**  
+   Contiene SPs para registrar, actualizar y consultar expedientes.
+
+Ejecuta estos scripts en orden sobre una instancia SQL Server si no usas Docker.
+
+---
+
+## 🐳 Ejecutar el proyecto con Docker
+
+Desde la raíz del proyecto:
 
 ```bash
 docker compose up -d --build
@@ -41,39 +88,61 @@ docker compose up -d --build
 
 Esto levantará:
 
-- **Backend** → http://localhost:4000  
-- **Frontend** → http://localhost:3000  
-- **SQL Server en Docker** → localhost,1433  
+- **Backend** → http://localhost:4000
+- **Frontend** → según configuración del Dockerfile
+- **SQL Server** → Contenedor accesible como `sqlserver` puerto `1433`
 
----
+Ver logs:
 
-## 🗄️ Acceso a SQL Server
-
-```
-Server: localhost,1433
-User: sa
-Password: TuPassword123!
+```bash
+docker compose logs -f
 ```
 
----
+Apagar servicios:
 
-## 🖥️ Endpoints Backend (ejemplo)
-
-| Método | Ruta | Descripción |
-|--------|-------|-------------|
-| GET | /api/db-test | Prueba de conexión a SQL Server |
+```bash
+docker compose down
+```
 
 ---
 
-## ⚙️ Variables de entorno
+## ▶️ Ejecución manual sin Docker (opcional)
 
-Cada servicio usa su propio archivo:
+### Backend
 
-- `backend/.env.docker`
-- `frontend/.env.docker`
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 
-## 👨‍💻 Autor
+## ✨ Funcionalidades principales
 
-**Carlos Vanegas – Postulante**
+- Autenticación con JWT
+- Gestión de usuarios
+- Gestión completa de expedientes
+- Actualización y seguimiento de estados
+- Registro de técnico asignado
+- Manejo de fechas de registro, actualización y aprobación
+
+---
+
+## 📌 Notas finales
+
+- El proyecto está preparado para entorno Docker, pero puede ejecutarse localmente.
+- Los scripts SQL deben ejecutarse primero si decides no usar Docker.
+- La estructura está organizada para que sea fácil de extender y mantener.
+
+---
+
+**Proyecto listo para evaluación y ejecución inmediata.**
