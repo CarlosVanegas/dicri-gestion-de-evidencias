@@ -49,9 +49,42 @@ async function actualizarExpediente(id_expediente, { titulo, descripcion, id_est
     return result.recordset[0];
 }
 
+
+async function aprobarExpediente(id_expediente, id_usuario_coordinador) {
+    const connection = await pool;
+    const request = connection.request();
+
+    request.input('id_expediente', sql.Int, id_expediente);
+    request.input('id_usuario_coordinador', sql.Int, id_usuario_coordinador);
+
+    await request.execute('sp_AprobarExpediente');
+}
+
+async function rechazarExpediente(id_expediente, id_usuario_coordinador, justificacion) {
+    const connection = await pool;
+    const request = connection.request();
+
+    request.input('id_expediente', sql.Int, id_expediente);
+    request.input('id_usuario_coordinador', sql.Int, id_usuario_coordinador);
+    request.input('justificacion', sql.VarChar(1000), justificacion);
+
+    await request.execute('sp_RechazarExpediente');
+}
+
+async function eliminarExpediente(id_expediente) {
+    const connection = await pool;
+    const request = connection.request();
+
+    request.input('id_expediente', sql.Int, id_expediente);
+    await request.execute('sp_DeleteExpediente');
+}
+
 module.exports = {
     listarExpedientes,
     obtenerExpedientePorId,
     crearExpediente,
     actualizarExpediente,
+    aprobarExpediente,
+    rechazarExpediente,
+    eliminarExpediente
 };

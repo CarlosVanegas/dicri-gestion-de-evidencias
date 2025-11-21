@@ -7,6 +7,10 @@ const estadosRoutes = require('./routes/estados.routes');
 const rolesRoutes = require('./routes/roles.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const expedientesRoutes = require('./routes/expedientes.routes');
+const indiciosRoutes = require('./routes/indicios.routes');
+const reportesRoutes = require('./routes/reportes.routes');
+const catalogosRoutes = require('./routes/catalogos.routes');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 
@@ -50,6 +54,10 @@ app.use('/api/estados', estadosRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/expedientes', expedientesRoutes);
+app.use('/api/expedientes', expedientesRoutes);
+app.use('/api/indicios', indiciosRoutes);
+app.use('/api/reportes', reportesRoutes);
+app.use('/api/catalogos', catalogosRoutes);
 // Middleware de errores al final
 app.use(errorMiddleware);
 
